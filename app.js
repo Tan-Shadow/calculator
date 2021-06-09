@@ -3,7 +3,7 @@ const display = calculator.querySelector('.calculator-display')
 const keys = calculator.querySelector('.calculator-keys')
 
 
-keys.addEventListener('click', event => { // event is not a keyword its just a parameter in which an object is passed by addEventListener  
+keys.addEventListener('click', event => { 
     if (!event.target.closest('button')) return
 
     const key = event.target
@@ -33,36 +33,32 @@ keys.addEventListener('click', event => { // event is not a keyword its just a p
     }
     // is this a operator key
     if (type === 'operator') {
-        // adds a query on data type operator to the keys and saves it in operatorKeys
         const operatorKeys = keys.querySelectorAll("[data-type='operator']")
-        // previous selected operator keys datasets state is emptied
         operatorKeys.forEach(el => el.dataset.state = '')
 
         key.dataset.state = 'selected'
 
-        calculator.dataset.firstNumber = displayValue // firstNumber of the calculators dataset is set to display value of what is typed before an operator
-        calculator.dataset.operator = key.dataset.key // the operator of the calculatord dataset is set to the data-key of it
+        calculator.dataset.firstNumber = displayValue 
+        calculator.dataset.operator = key.dataset.key 
     }
 
     if (type === 'equal') {
         // perform a calculation
         const firstNumber = calculator.dataset.firstNumber
         const operator = calculator.dataset.operator
-        const secondNumber = displayValue // will be the number typed after the operator 
+        const secondNumber = displayValue
         
         display.textContent = calculate(firstNumber, operator, secondNumber)
     }
     if (type === 'clear') display.textContent = 0
 
 
-    calculator.dataset.previousKeyType = type // set the data type of the previously typed key to its type
+    calculator.dataset.previousKeyType = type
 })
 
 function calculate(firstNumber, operator, secondNumber) {
     firstNumber = parseFloat(firstNumber)
     secondNumber = parseFloat(secondNumber)
-    // let result = ''
-
     
     if (operator === 'divide' && secondNumber === 0) return 'Ask einstein about it!'
     if (operator === 'plus') return firstNumber + secondNumber
@@ -70,5 +66,4 @@ function calculate(firstNumber, operator, secondNumber) {
     if (operator === 'times') return firstNumber * secondNumber
     if (operator === 'divide') return firstNumber / secondNumber
 
-    // return result
 }
